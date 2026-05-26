@@ -1,4 +1,4 @@
-/* ===== Base Reset & Global Styles ===== */
+/* ===== Base Reset & Global Styles - iOS Fixed ===== */
 
 *,
 *::before,
@@ -6,13 +6,15 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent; /* ✅ ลบสีฟ้าเวลาแตะบน iOS */
 }
 
 html {
   overflow-x: hidden;
-  -webkit-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; /* ✅ ป้องกันตัวหนังสือขยายบน iOS */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -21,16 +23,26 @@ body {
   color: var(--text-dark);
   line-height: 1.6;
   overflow-x: hidden;
-
-  /* ✅ Scroll snap container */
+  
+  /* ✅ Scroll setup ที่ทำงานได้บนทั้ง iOS และ Android */
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; /* ✅ บังคับ smooth scroll บน iOS */
   scroll-snap-type: y mandatory;
   height: 100vh;
-  scroll-behavior: smooth;
+  height: 100dvh; /* ✅ ใช้ dvh สำหรับมือถือรุ่นใหม่ */
+  
+  /* ✅ ป้องกันการดึงเพื่อรีเฟรชที่ขัดกับ scroll-snap */
+  overscroll-behavior-y: contain;
 }
 
-body.no-scroll {
-  overflow: hidden;
+body.no-scroll,
+body.lock-envelope {
+  overflow: hidden !important;
+  position: fixed; /* ✅ ใช้ fixed แทน hidden เพื่อล็อคตำแหน่งบน iOS */
+  width: 100%;
+  height: 100dvh;
+  top: 0;
+  left: 0;
 }
 
 /* Typography */
@@ -43,29 +55,27 @@ body.no-scroll {
   font-feature-settings: 'tnum';
 }
 
-/* ===== Scene Structure ===== */
+/* ===== Scene Structure - iOS Fixed ===== */
 
 .scene {
   min-height: 100vh;
+  min-height: 100dvh; /* ✅ รองรับมือถือที่มี notch */
   width: 100%;
   position: relative;
   overflow: hidden;
   pointer-events: auto;
-
-  /* ✅ Snap ทีละซีน */
+  
+  /* ✅ ใช้ normal แทน always เพื่อความลื่นบน iOS */
   scroll-snap-align: start;
-  scroll-snap-stop: always;
+  scroll-snap-stop: normal;
+  
+  /* ✅ ป้องกันการเลื่อนแนวนอนโดยไม่ได้ตั้งใจ */
+  touch-action: pan-y;
 }
 
 .scene.scene-active {
   opacity: 1;
   pointer-events: auto;
-}
-
-
-body.lock-envelope {
-  overflow: hidden !important;
-  height: 100vh;
 }
 
 /* ===== Global Overlays ===== */
@@ -75,8 +85,8 @@ body.lock-envelope {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  z-index: var(--z-scene-transition);
+  height: 100dvh;
+  z-index: var(--z-scene-transition, 9999);
   pointer-events: none;
   opacity: 0;
   overflow: hidden;
@@ -84,6 +94,7 @@ body.lock-envelope {
 
 .scene-transition.active {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .transition-petals,
@@ -106,13 +117,13 @@ body.lock-envelope {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100dvh;
   pointer-events: none;
-  z-index: var(--z-global-elements);
+  z-index: var(--z-global-elements, 1);
   overflow: hidden;
 }
 
-/* ===== Music Button ===== */
+/* ===== Music Button - iOS Touch Friendly ===== */
 
 .music-btn {
   position: fixed;
@@ -120,32 +131,33 @@ body.lock-envelope {
   right: 30px;
   width: 56px;
   height: 56px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-full, 50%);
   background: var(--white);
   border: 2px solid var(--light-blue);
   cursor: pointer;
-  z-index: var(--z-sticky);
+  z-index: var(--z-sticky, 1000);
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-md);
-  transition: all var(--transition-base);
+  transition: all var(--transition-base, 0.3s);
   overflow: hidden;
-}
-
-.music-btn:hover {
-  transform: scale(1.05);
-  box-shadow: var(--shadow-lg);
+  
+  /* ✅ เพิ่มพื้นที่แตะสำหรับนิ้ว */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .music-btn:active {
   transform: scale(0.95);
+  transition-duration: 0.1s;
 }
 
 .music-icon {
   font-size: 24px;
   position: absolute;
-  transition: all var(--transition-base);
+  transition: all var(--transition-base, 0.3s);
+  pointer-events: none;
 }
 
 .music-playing {
@@ -157,21 +169,10 @@ body.lock-envelope {
   opacity: 0;
 }
 
-.music-btn[aria-pressed="true"] .music-playing {
-  opacity: 1;
-}
-
-.music-btn[aria-pressed="true"] .music-paused {
-  opacity: 0;
-}
-
-.music-btn[aria-pressed="false"] .music-playing {
-  opacity: 0;
-}
-
-.music-btn[aria-pressed="false"] .music-paused {
-  opacity: 1;
-}
+.music-btn[aria-pressed="true"] .music-playing { opacity: 1; }
+.music-btn[aria-pressed="true"] .music-paused { opacity: 0; }
+.music-btn[aria-pressed="false"] .music-playing { opacity: 0; }
+.music-btn[aria-pressed="false"] .music-paused { opacity: 1; }
 
 .music-tooltip {
   position: absolute;
@@ -182,11 +183,11 @@ body.lock-envelope {
   background: var(--primary-blue);
   color: var(--white);
   font-size: 12px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-sm, 8px);
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--transition-base);
+  transition: opacity var(--transition-base, 0.3s);
 }
 
 .music-btn:hover .music-tooltip {
@@ -194,20 +195,11 @@ body.lock-envelope {
 }
 
 @keyframes musicPulse {
-
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
 }
 
-/* ===== Scene Nav Dots (เพิ่มใหม่) ===== */
+/* ===== Scene Nav Dots ===== */
 
 .scene-nav-dots {
   position: fixed;
@@ -217,28 +209,31 @@ body.lock-envelope {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  z-index: var(--z-sticky);
+  z-index: var(--z-sticky, 1000);
   pointer-events: auto;
 }
 
-/* ซ่อนบนซีน envelope */
 body[data-current-scene="envelope"] .scene-nav-dots {
   display: none;
 }
 
 .nav-dot {
-  width: 8px;
-  height: 8px;
+  width: 12px; /* ✅ ขยายขนาดให้แตะง่าย */
+  height: 12px;
   border-radius: 50%;
   background: rgba(36, 60, 124, 0.25);
-  border: 1px solid rgba(36, 60, 124, 0.4);
+  border: 2px solid rgba(36, 60, 124, 0.4);
   cursor: pointer;
   transition: all 0.3s ease;
   padding: 0;
   outline: none;
+  
+  /* ✅ เพิ่มพื้นที่แตะเสมือน */
+  margin: 4px;
 }
 
-.nav-dot:hover {
+.nav-dot:hover,
+.nav-dot:focus-visible {
   background: rgba(36, 60, 124, 0.5);
   transform: scale(1.3);
 }
@@ -256,24 +251,29 @@ body[data-current-scene="envelope"] .scene-nav-dots {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: var(--z-toast);
+  z-index: var(--z-toast, 9999);
   display: flex;
   flex-direction: column;
   gap: 10px;
   pointer-events: none;
+  padding: 0 20px;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
 }
 
 .toast {
   background: var(--white);
   padding: 16px 24px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-md, 12px);
   box-shadow: var(--shadow-lg);
   display: flex;
   align-items: center;
   gap: 12px;
   animation: toastSlideIn 0.4s ease;
   pointer-events: auto;
-  max-width: 90vw;
+  max-width: 100%;
+  font-size: 14px;
 }
 
 .toast.hiding {
@@ -281,27 +281,13 @@ body[data-current-scene="envelope"] .scene-nav-dots {
 }
 
 @keyframes toastSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translate(-50%, -20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
 }
 
 @keyframes toastSlideOut {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  to {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
+  from { opacity: 1; transform: translate(-50%, 0); }
+  to { opacity: 0; transform: translate(-50%, -20px); }
 }
 
 /* ===== Skip Link (Accessibility) ===== */
@@ -314,9 +300,9 @@ body[data-current-scene="envelope"] .scene-nav-dots {
   background: var(--primary-blue);
   color: var(--white);
   padding: 12px 24px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-md, 12px);
   z-index: 10000;
-  transition: top var(--transition-fast);
+  transition: top var(--transition-fast, 0.2s);
 }
 
 .skip-link:focus {
@@ -337,34 +323,37 @@ body[data-current-scene="envelope"] .scene-nav-dots {
   border: 0;
 }
 
-.text-center {
-  text-align: center;
-}
+.text-center { text-align: center; }
+.hidden { display: none !important; }
+.invisible { visibility: hidden; }
 
-.hidden {
-  display: none !important;
-}
+/* ===== Common Button Styles - iOS Touch Friendly ===== */
 
-.invisible {
-  visibility: hidden;
+.btn-primary,
+.btn-outline {
+  /* ✅ เพิ่มพื้นที่แตะขั้นต่ำ 44x44px ตามมาตรฐาน Apple */
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
-
-/* ===== Common Button Styles ===== */
 
 .btn-primary {
   background: linear-gradient(135deg, var(--primary-blue), var(--deep-blue));
   color: var(--white);
   border: none;
   padding: 14px 32px;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-xl, 24px);
   font-size: 16px;
   font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all var(--transition-base, 0.3s);
   box-shadow: 0 4px 16px rgba(36, 60, 124, 0.3);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
   text-decoration: none;
 }
 
@@ -375,6 +364,7 @@ body[data-current-scene="envelope"] .scene-nav-dots {
 
 .btn-primary:active {
   transform: translateY(0);
+  transition-duration: 0.1s;
 }
 
 .btn-outline {
@@ -382,14 +372,10 @@ body[data-current-scene="envelope"] .scene-nav-dots {
   color: var(--primary-blue);
   border: 2px solid var(--light-blue);
   padding: 12px 28px;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-xl, 24px);
   font-size: 15px;
   font-weight: 500;
-  cursor: pointer;
-  transition: all var(--transition-base);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  transition: all var(--transition-base, 0.3s);
 }
 
 .btn-outline:hover {
@@ -454,8 +440,13 @@ body[data-current-scene="envelope"] .scene-nav-dots {
   gap: 12px;
   color: var(--text-gray);
   cursor: pointer;
-  z-index: var(--z-base);
+  z-index: var(--z-base, 10);
   animation: scrollBounce 2s infinite;
+  
+  /* ✅ เพิ่มพื้นที่แตะ */
+  padding: 10px;
+  margin: -10px;
+  touch-action: manipulation;
 }
 
 .scroll-indicator span {
@@ -473,14 +464,77 @@ body[data-current-scene="envelope"] .scene-nav-dots {
 }
 
 @keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
 
-  0%,
-  100% {
-    transform: translateX(-50%) translateY(0);
+/* ===== iOS Specific Fixes ===== */
+
+@supports (-webkit-touch-callout: none) {
+  /* CSS เฉพาะ Safari/iOS */
+  
+  .scene {
+    /* ✅ แก้ปัญหาซีนสูงเกินจอบน iOS */
+    min-height: -webkit-fill-available;
   }
-
-  50% {
-    transform: translateX(-50%) translateY(10px);
+  
+  /* ✅ แก้ปัญหา 100dvh ไม่ทำงานบน iOS เก่า */
+  @supports not (height: 100dvh) {
+    .scene {
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+    }
+  }
+  
+  /* ✅ ป้องกันการซูมเมื่อแตะดับเบิล */
+  input, textarea, select, button, [role="button"] {
+    touch-action: manipulation;
   }
 }
 
+/* ===== Reduced Motion Preference ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  body {
+    scroll-behavior: auto;
+  }
+}
+
+/* ===== Small Screen Optimization ===== */
+
+@media (max-width: 480px) {
+  .section-header h2 {
+    font-size: 32px;
+  }
+  
+  .btn-primary,
+  .btn-outline {
+    padding: 12px 24px;
+    font-size: 15px;
+  }
+  
+  .music-btn {
+    width: 52px;
+    height: 52px;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .scene-nav-dots {
+    right: 12px;
+  }
+  
+  .nav-dot {
+    width: 10px;
+    height: 10px;
+  }
+}
