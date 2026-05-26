@@ -1,0 +1,73 @@
+:root {
+  /* Color Palette - Dusty Blue Romance */
+  --color-gray-silver: #a4a5a7;
+  --color-light-blue: #b8cdde;
+  --color-medium-blue: #5782b7;
+  --color-deep-blue: #243c7c;
+  --color-purple-blue: #495d91;
+  
+  /* Primary Colors */
+  --primary-blue: #243c7c;
+  --light-blue: #b8cdde;
+  --pale-blue: #e8f0f8;
+  --deep-blue: #1a2f5c;
+  
+  /* Accent Colors */
+  --gold: #d4af37;
+  --gold-light: #f4e5c2;
+  --white: #ffffff;
+  --off-white: #fafafa;
+  --cream: #fefefe;
+  
+  /* Text Colors */
+  --text-dark: #2c3e50;
+  --text-gray: #78909c;
+  --text-light: #b0bec5;
+  
+  /* Gradient Colors */
+  --gradient-blue: linear-gradient(135deg, #e8f0f8 0%, #d4e4f7 50%, #e8f0f8 100%);
+  --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f4e5c2 50%, #d4af37 100%);
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.16);
+  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.2);
+  --shadow-glow: 0 0 40px rgba(184, 205, 222, 0.4);
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 30px;
+  --radius-full: 50%;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  
+  /* Z-Index Layers */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+  --z-overlay: 500;
+  --z-scene-transition: 600;
+  --z-global-elements: 700;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-slower: 0.8s ease;
+  
+  /* Fonts */
+  --font-primary: 'Inter', 'Taviraj', sans-serif;
+  --font-script: 'Great Vibes', cursive;
+  --font-thai: 'Taviraj', serif;
+}

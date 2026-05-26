@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <meta
+      name="description"
+      content="การ์ดเชิญงานแต่งออนไลน์ ธนภัทร & มณฑิดา - 26 กรกฎาคม 2569"
+    />
+    <meta name="theme-color" content="#243c7c" />
+
+    <title>ธนภัทร & มณฑิตา · Wedding Invitation</title>
+
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Taviraj:wght@300;400;500;700&family=Great+Vibes&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS Architecture (Modular by Scene) -->
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <link rel="stylesheet" href="css/envelope.css" />
+    <link rel="stylesheet" href="css/hero.css" />
+    <link rel="stylesheet" href="css/countdown.css" />
+    <link rel="stylesheet" href="css/gallery.css" />
+    <link rel="stylesheet" href="css/schedule.css" />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/location.css" />
+    <link rel="stylesheet" href="css/rsvp.css" />
+    <link rel="stylesheet" href="css/thanks.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/couple-reveal.css" />
+
+    <!-- Preload Critical Images -->
+    <link rel="preload" as="image" href="assets/images/couple-main.png" />
+    <link rel="preload" as="image" href="assets/images/envelope-bg.jpg" />
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        "name": "งานมงคลสมรส ธนภัทร & มณฑิตา",
+        "startDate": "2026-07-26T07:00:00+07:00",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "location": {
+          "@type": "Place",
+          "name": "หมู่บ้าน The plant รังสิต-คลองหลวง",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "47/7 หมู่ 4 ต.คลองสอง อ.คลองหลวง",
+            "addressRegion": "ปทุมธานี",
+            "postalCode": "12120",
+            "addressCountry": "TH"
+          }
+        },
+        "organizer": {
+          "@type": "Person",
+          "name": "ธนภัทร & มณฑิดา"
+        }
+      }
+    </script>
+  </head>
+  <body data-current-scene="envelope">
+    <!-- ===== GLOBAL OVERLAYS ===== -->
+
+    <!-- Transition Overlay (Scene to Scene) -->
+    <div id="scene-transition" class="scene-transition" aria-hidden="true">
+      <div class="transition-petals"></div>
+      <div class="transition-glow"></div>
+    </div>
+
+    <!-- Global Floating Particles -->
+    <div id="global-petals" class="global-petals" aria-hidden="true"></div>
+
+    <!-- Music Control (Fixed Position) -->
+    <button
+      id="music-toggle"
+      class="music-btn"
+      aria-label="เปิด/ปิดเพลงประกอบ"
+      aria-pressed="false"
+    >
+      <span class="music-icon music-playing">🎵</span>
+      <span class="music-icon music-paused">🔇</span>
+      <span class="music-tooltip">เพลงประกอบ</span>
+    </button>
+
+    <!-- Toast Notification Container -->
+    <div
+      id="toast-container"
+      class="toast-container"
+      role="status"
+      aria-live="polite"
+    ></div>
+
+    <!-- ===== SCENE 1: OPENING ENVELOPE ===== -->
+    <section
+      id="envelope-scene"
+      class="scene scene-active"
+      data-scene="envelope"
+      aria-label="เปิดซองจดหมายเชิญ"
+    >
+      <!-- พื้นหลังรูปภาพ -->
+      <div class="envelope-bg-layer">
+        <img
+          src="assets/images/19.png"
+          alt="พื้นหลังซองเชิญ"
+          class="envelope-bg-img"
+          width="1920"
+          height="1080"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+        <div class="envelope-bg-overlay"></div>
+        <div class="envelope-bg-vignette"></div>
+      </div>
+
+      <!-- Floating Petals -->
+      <div class="floating-petals" aria-hidden="true"></div>
+
+      <!-- ✅ ส่วนซองจดหมาย (แยกออกมาเพื่อให้ Popup ไม่ขยับตาม) -->
+      <div
+        class="envelope-container"
+        id="envelope-container"
+        role="button"
+        tabindex="0"
+        aria-label="แตะเพื่อเปิดคำเชิญ"
+      >
+        <!-- Main Envelope -->
+        <div class="envelope" id="envelope" aria-hidden="false">
+          <div class="envelope-back"></div>
+          <div class="envelope-flap" id="envelope-flap">
+            <div
+              class="wax-seal"
+              id="wax-seal"
+              role="button"
+              tabindex="0"
+              aria-label="ตราประทับขี้ผึ้ง"
+            >
+              <span class="seal-text">T M</span>
+              <div class="seal-shine"></div>
+              <div class="seal-crack"></div>
+            </div>
+          </div>
+          <div class="envelope-to">
+            <span class="envelope-to-text">ขอเรียนเชิญ…</span>
+          </div>
+          <div class="envelope-fold-left"></div>
+          <div class="envelope-fold-right"></div>
+          <div class="envelope-fold-bottom"></div>
+        </div>
+      </div>
+
+      <!-- ✅ Popup ย้ายมาไว้นอก Container แล้ว (จะไม่ขยับตามซอง) -->
+      <div
+        class="couple-photo-popup"
+        id="couple-photo-popup"
+        aria-hidden="true"
+      >
+        <div class="photo-frame-large">
+          <img
+            src="assets/images/1.jpg"
+            alt="ภาพคู่บ่าวสาว ธนภัทร และ มณฑิดา"
+            class="popup-image"
+            id="popup-image"
+            width="1000"
+            height="1500"
+            loading="eager"
+          />
+          <div class="photo-glow"></div>
+          <div class="photo-sparkles" id="sparkles"></div>
+        </div>
+        <div class="popup-text">
+          <p class="popup-invite">ขอเชิญร่วมงานมงคลสมรส</p>
+          <h2 class="popup-names"></h2>
+        </div>
+      </div>
+
+      <!-- Tap Hint -->
+      <div class="tap-hint" id="tap-hint">
+        <span class="hint-icon">👆</span>
+      </div>
+
+      <!-- Transition Overlay -->
+      <div class="transition-overlay" id="envelope-transition"></div>
+    </section>
+
+    <!-- ===== SCENE 2: COUPLE REVEAL ===== -->
+    <section
+      id="couple-reveal-scene"
+      class="scene"
+      data-scene="couple-reveal"
+      aria-label="แนะนำบ่าวสาว"
+    >
+      <!-- Background Image Layer -->
+      <div class="reveal-bg-layer">
+        <img
+          src="assets/images/15.jpg"
+          alt="ลวดลายดอกไม้พื้นหลัง"
+          class="reveal-bg-img"
+          width="1920"
+          height="1080"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="reveal-content">
+        <div class="reveal-card">
+          <div class="reveal-image-wrapper">
+            <img
+              src="assets/images/2.jpg"
+              alt="ธนภัทร และ มณฑิดา"
+              class="reveal-image"
+              width="600"
+              height="750"
+              loading="lazy"
+            />
+            <div class="reveal-frame"></div>
+          </div>
+
+          <div class="reveal-text">
+            <p class="reveal-intro font-script">Together with their families</p>
+            <h1 class="reveal-names">
+              <span class="name-line name-first">Thanapat</span>
+              <span class="name-amp" aria-hidden="true">🤍</span>
+              <span class="name-line name-last">Monthita</span>
+            </h1>
+            <p class="reveal-subtitle">ขอเรียนเชิญท่านร่วมเป็นสักขีพยาน</p>
+            <p class="reveal-date font-numbers">26 July 2026</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal-petals" aria-hidden="true"></div>
+      <div class="scroll-indicator" id="reveal-scroll">
+        <span>เลื่อนเพื่อชมการ์ดเชิญ</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </section>
+
+    <!-- ===== SCENE 4: COUNTDOWN ===== -->
+    <section
+      id="countdown-scene"
+      class="scene"
+      data-scene="countdown"
+      aria-label="นับถอยหลังสู่วันแต่งงาน"
+    >
+      <!-- Background Image Layer -->
+      <div class="countdown-bg-layer">
+        <img
+          src="assets/images/15.jpg"
+          alt="พื้นหลังนับถอยหลัง"
+          class="countdown-bg-img"
+          width="1920"
+          height="1080"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="countdown-wrapper">
+        <div class="countdown-card">
+          <p class="countdown-label">นับถอยหลังสู่วันสำคัญ</p>
+
+          <div class="countdown-grid">
+            <div class="countdown-unit">
+              <span
+                class="countdown-number font-numbers"
+                id="cd-days"
+                aria-live="polite"
+                >00</span
+              >
+              <span class="countdown-text">วัน</span>
+            </div>
+            <div class="countdown-unit">
+              <span
+                class="countdown-number font-numbers"
+                id="cd-hours"
+                aria-live="polite"
+                >00</span
+              >
+              <span class="countdown-text">ชั่วโมง</span>
+            </div>
+            <div class="countdown-unit">
+              <span
+                class="countdown-number font-numbers"
+                id="cd-minutes"
+                aria-live="polite"
+                >00</span
+              >
+              <span class="countdown-text">นาที</span>
+            </div>
+            <div class="countdown-unit">
+              <span
+                class="countdown-number font-numbers"
+                id="cd-seconds"
+                aria-live="polite"
+                >00</span
+              >
+              <span class="countdown-text">วินาที</span>
+            </div>
+          </div>
+
+          <p class="countdown-date">วันอาทิตย์ที่ 26 กรกฎาคม พ.ศ. 2569</p>
+          <p class="countdown-time">เวลา 07.09 น. เป็นต้นไป</p>
+        </div>
+      </div>
+
+      <div class="countdown-decorations">
+        <div class="decoration-flower flower-1"></div>
+        <div class="decoration-flower flower-2"></div>
+        <div class="decoration-flower flower-3"></div>
+      </div>
+
+      <div class="countdown-petals" aria-hidden="true"></div>
+    </section>
+
+    <!-- ===== SCENE 5: GALLERY ===== -->
+    <section
+      id="gallery-scene"
+      class="scene"
+      data-scene="gallery"
+      aria-label="แกลเลอรี่ภาพบ่าวสาว"
+    >
+      <!-- Background Image Layer -->
+      <div class="gallery-bg-layer">
+        <img
+          src="assets/images/15.jpg"
+          alt="พื้นหลังแกลเลอรี่"
+          class="gallery-bg-img"
+          width="1920"
+          height="1080"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="section-header">
+        <span class="eyebrow">✿ ภาพความทรงจำ ✿</span>
+        <h2>โมเมนต์พิเศษของเรา</h2>
+        <div class="divider"><span></span>🌸<span></span></div>
+      </div>
+
+      <!-- Cinematic Gallery Slider -->
+      <div class="gallery-container">
+        <div class="gallery-viewport">
+          <div class="gallery-slides" id="gallery-slides">
+            <figure class="gallery-slide">
+              <img
+                src="assets/images/4.jpg"
+                alt="ภาพความทรงจำ ชุดที่ 1"
+                width="1200"
+                height="800"
+                loading="lazy"
+              />
+              <figcaption class="gallery-caption">วันที่เราพบกัน</figcaption>
+            </figure>
+
+            <figure class="gallery-slide">
+              <img
+                src="assets/images/5.jpg"
+                alt="ภาพความทรงจำ ชุดที่ 2"
+                width="1200"
+                height="800"
+                loading="lazy"
+              />
+              <figcaption class="gallery-caption">
+                ช่วงเวลาที่แสนหวาน
+              </figcaption>
+            </figure>
+
+            <figure class="gallery-slide">
+              <img
+                src="assets/images/6.jpg"
+                alt="ภาพความทรงจำ ชุดที่ 3"
+                width="1200"
+                height="800"
+                loading="lazy"
+              />
+              <figcaption class="gallery-caption">การเดินทางด้วยกัน</figcaption>
+            </figure>
+
+            <figure class="gallery-slide">
+              <img
+                src="assets/images/7.jpg"
+                alt="ภาพความทรงจำ ชุดที่ 4"
+                width="1200"
+                height="800"
+                loading="lazy"
+              />
+              <figcaption class="gallery-caption">
+                รอยยิ้มที่แสนอบอุ่น
+              </figcaption>
+            </figure>
+
+            <figure class="gallery-slide">
+              <img
+                src="assets/images/8.jpg"
+                alt="ภาพความทรงจำ ชุดที่ 5"
+                width="1200"
+                height="800"
+                loading="lazy"
+              />
+              <figcaption class="gallery-caption">ความรักที่เติบโต</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <!-- Gallery Controls -->
+        <div class="gallery-controls">
+          <button class="gallery-btn gallery-prev" aria-label="ภาพก่อนหน้า">
+            ❮
+          </button>
+          <div class="gallery-dots" id="gallery-dots"></div>
+          <button class="gallery-btn gallery-next" aria-label="ภาพถัดไป">
+            ❯
+          </button>
+        </div>
+
+        <!-- Gallery Progress -->
+        <div class="gallery-progress">
+          <div class="progress-bar" id="gallery-progress"></div>
+        </div>
+      </div>
+
+      <div class="gallery-petals" aria-hidden="true"></div>
+    </section>
+
+    <!-- ===== SCENE 6: WEDDING SCHEDULE ===== -->
+    <section
+      id="schedule-scene"
+      class="scene"
+      data-scene="schedule"
+      aria-label="ลำดับพิธีการ"
+    >
+      <!-- Background Image Layer -->
+      <div class="schedule-bg-layer">
+        <img
+          src="assets/images/15.jpg"
+          alt="พื้นหลังกำหนดการ"
+          class="schedule-bg-img"
+          width="1920"
+          height="1080"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="section-header">
+        <span class="eyebrow">✿ กำหนดการ ✿</span>
+        <h2>ลำดับพิธีการงานมงคลสมรส</h2>
+        <div class="divider"><span></span>🌸<span></span></div>
+      </div>
+
+      <!-- Elegant Timeline -->
+      <div class="timeline">
+        <div class="timeline-line"></div>
+
+        <article class="timeline-item">
+          <div class="timeline-icon" aria-hidden="true">
+            <img
+              src="assets/images/26.png"
+              alt="พิธีสงฆ์"
+              width="48"
+              height="48"
+              loading="lazy"
+            />
+          </div>
+          <div class="timeline-content">
+            <time class="timeline-time font-numbers" datetime="2026-07-26T07:00"
+              >07.00 น.</time
+            >
+            <h3 class="timeline-title">พิธีสงฆ์</h3>
+          </div>
+        </article>
+
+        <article class="timeline-item">
+          <div class="timeline-icon" aria-hidden="true">
+            <img
+              src="assets/images/30.png"
+              alt="แห่ขันหมากและพิธีหมั้น"
+              width="48"
+              height="48"
+              loading="lazy"
+            />
+          </div>
+          <div class="timeline-content">
+            <time class="timeline-time font-numbers" datetime="2026-07-26T09:00"
+              >09.00 น.</time
+            >
+            <h3 class="timeline-title">แห่ขันหมาก & พิธีหมั้น</h3>
+          </div>
+        </article>
+
+        <article class="timeline-item">
+          <div class="timeline-icon" aria-hidden="true">
+            <img
+              src="assets/images/29.png"
+              alt="พิธีไหว้ผู้ใหญ่"
+              width="48"
+              height="48"
+              loading="lazy"
+            />
+          </div>
+          <div class="timeline-content">
+            <time class="timeline-time font-numbers" datetime="2026-07-26T10:09"
+              >10.09 น.</time
+            >
+            <h3 class="timeline-title">พิธีไหว้ผู้ใหญ่</h3>
+          </div>
+        </article>
+
+        <article class="timeline-item">
+          <div class="timeline-icon" aria-hidden="true">
+            <img
+              src="assets/images/23.png"
+              alt="หลั่งน้ำพระพุทธมนต์"
+              width="48"
+              height="48"
+              loading="lazy"
+            />
+          </div>
+          <div class="timeline-content">
+            <time class="timeline-time font-numbers" datetime="2026-07-26T11:09"
+              >11.09 น.</time
+            >
+            <h3 class="timeline-title">หลั่งน้ำพระพุทธมนต์</h3>
+          </div>
+        </article>
+
+        <article class="timeline-item">
+          <div class="timeline-icon" aria-hidden="true">
+            <img
+              src="assets/images/25.png"
+              alt="รับประทานอาหาร"
+              width="48"
+              height="48"
+              loading="lazy"
+            />
+          </div>
+          <div class="timeline-content">
+            <time class="timeline-time font-numbers" datetime="2026-07-26T12:00"
+              >12.00 น.</time
+            >
+            <h3 class="timeline-title">รับประทานอาหาร</h3>
+          </div>
+        </article>
+      </div>
+
+      <div class="schedule-petals" aria-hidden="true"></div>
+    </section>
+
+    <!-- ===== SCENE 7: WEDDING THEME ===== -->
+    <section
+      id="theme-scene"
+      class="scene"
+      data-scene="theme"
+      aria-label="ธีมงานแต่งงาน"
+    >
+      <!-- Background Image Layer -->
+      <div class="theme-bg-layer">
+        <img
+          src="assets/images/15.jpg"
+          alt="พื้นหลังธีมงาน"
+          class="theme-bg-img"
+          width="1920"
+          height="1080"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="section-header">
+        <span class="eyebrow">✿ ธีมงาน ✿</span>
+        <h2>Dusty Blue Romance</h2>
+        <div class="divider"><span></span>💙<span></span></div>
+      </div>
+
+      <!-- Theme Card -->
+      <div class="theme-card">
+        <div class="theme-details">
+          <h3 class="theme-title">โทนสีหลัก</h3>
+
+          <div class="color-palette-wrapper">
+            <div class="color-palette">
+              <div
+                class="color-swatch"
+                style="background-color: #a4a5a7"
+                aria-label="สีเทาเงิน"
+                tabindex="0"
+              >
+                <span class="color-label">#A4A5A7</span>
+              </div>
+              <div
+                class="color-swatch"
+                style="background-color: #b8cdde"
+                aria-label="สีฟ้าอ่อน"
+                tabindex="0"
+              >
+                <span class="color-label">#B8CDDE</span>
+              </div>
+              <div
+                class="color-swatch"
+                style="background-color: #5782b7"
+                aria-label="สีฟ้ากลาง"
+                tabindex="0"
+              >
+                <span class="color-label">#5782B7</span>
+              </div>
+              <div
+                class="color-swatch"
+                style="background-color: #243c7c"
+                aria-label="สีน้ำเงินเข้ม"
+                tabindex="0"
+              >
+                <span class="color-label">#243C7C</span>
+              </div>
+              <div
+                class="color-swatch"
+                style="background-color: #495d91"
+                aria-label="สีม่วงฟ้า"
+                tabindex="0"
+              >
+                <span class="color-label">#495D91</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dress-code-section">
+            <h3 class="theme-subtitle">Dress Code</h3>
+            <div class="dress-code-box">
+              <p class="dress-code-text">สุภาพโทนสีฟ้า, เทา, ขาว หรือพาสเทล</p>
+            </div>
+          </div>
+
+          <div class="theme-message">
+            <div class="message-icon">✨</div>
+            <p class="message-text">
+              เราตั้งใจเลือกโทนสีที่อบอุ่นและหรูหรา<br />
+              เพื่อสร้างบรรยากาศที่โรแมนติกในวันพิเศษของเรา
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="theme-petals" aria-hidden="true"></div>
+    </section>
+
+    <!-- ===== SCENE 8: LOCATION ===== -->
+    <section
+      id="location-scene"
+      class="scene"
+      data-scene="location"
+      aria-label="สถานที่จัดงาน"
+    >
+      <!-- Background Image Layer -->
+      <div class="location-bg-layer">
+        <img
+          src="assets/images/15.jpg"
+          alt="พื้นหลังสถานที่จัดงาน"
+          class="location-bg-img"
+          width="1920"
+          height="1080"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="section-header">
+        <span class="eyebrow">✿ สถานที่ ✿</span>
+        <h2>หมู่บ้าน The plant รังสิต-คลองหลวง</h2>
+        <div class="divider"><span></span>📍<span></span></div>
+      </div>
+
+      <!-- Location Card -->
+      <div class="location-card">
+        <div class="location-content">
+          <!-- Address Section -->
+          <div class="address-section">
+            <h3 class="venue-name">🏛️ หมู่บ้าน The plant</h3>
+            <p class="venue-location">รังสิต-คลองหลวง</p>
+
+            <address class="full-address">
+              <span>47/7 หมู่ 4 ต.คลองสอง</span>
+              <span>อ.คลองหลวง จ.ปทุมธานี 12120</span>
+            </address>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <a
+              href="https://maps.google.com/?q=47/7+หมู่บ้าน+The+plant+รังสิต-คลองหลวง+ปทุมธานี"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary"
+            >
+              <span class="btn-icon">🗺️</span>
+              <span class="btn-text">นำทางด้วย Google Maps</span>
+            </a>
+
+            <button type="button" class="btn-secondary" id="copy-address-btn">
+              <span class="btn-icon">📋</span>
+              <span class="btn-text">คัดลอกที่อยู่</span>
+            </button>
+          </div>
+
+          <!-- Info Notes -->
+          <div class="info-notes">
+            <div class="note-item">
+              <span class="note-icon">🅿️</span>
+              <span class="note-text">มีที่จอดรถให้บริการ</span>
+            </div>
+            <div class="note-item">
+              <span class="note-icon">🚕</span>
+              <span class="note-text">เรียกแท็กซี่/รถโดยสารสะดวก</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="location-petals" aria-hidden="true"></div>
+    </section>
+
+    <!-- ===== SCENE 9: RSVP & THANK YOU ===== -->
+    <section
+      id="rsvp-scene"
+      class="scene"
+      data-scene="rsvp"
+      aria-label="ยืนยันการเข้าร่วมงานและขอบคุณ"
+    >
+      <!-- Background Image Layer -->
+      <div class="rsvp-bg-layer">
+        <img
+          src="assets/images/15.jpg"
+          alt="พื้นหลังยืนยันการเข้าร่วมงาน"
+          class="rsvp-bg-img"
+          width="1920"
+          height="1080"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="section-header">
+        <span class="eyebrow">✿ RSVP ✿</span>
+        <h2>ยืนยันการเข้าร่วมงาน</h2>
+        <div class="divider"><span></span>💐<span></span></div>
+      </div>
+
+      <!-- Main Card -->
+      <div class="rsvp-card">
+        <!-- RSVP Section -->
+        <div class="rsvp-section">
+          <h3 class="section-title">กรุณายืนยันการเข้าร่วม</h3>
+          <p class="section-desc">
+            เพื่อความสะดวกในการเตรียมงาน <br />
+            กรุณากรอกแบบฟอร์มด้านล่าง
+          </p>
+
+          <a
+            href="https://forms.google.com/your-form-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-rsvp"
+          >
+            <span class="btn-icon">📝</span>
+            <span class="btn-text">กรอกแบบฟอร์มยืนยันการเข้าร่วม</span>
+            <span class="btn-arrow">→</span>
+          </a>
+
+          <p class="form-note">* ใช้เวลาเพียง 1 นาทีเท่านั้น</p>
+        </div>
+
+        <!-- Divider -->
+        <div class="card-divider">
+          <span>✦</span>
+          <span class="divider-text">หรือร่วมแสดงความยินดี</span>
+          <span>✦</span>
+        </div>
+
+        <!-- QR Payment Section -->
+        <div class="qr-section">
+          <p class="qr-title">ร่วมอวยพรผ่าน QR Code</p>
+
+          <div
+            class="qr-wrapper"
+            id="qr-wrapper"
+            role="button"
+            tabindex="0"
+            aria-label="แตะเพื่อขยาย QR Code"
+          >
+            <img
+              src="assets/images/qr-payment.png"
+              alt="QR Code สำหรับร่วมอวยพร"
+              id="qr-code"
+              width="200"
+              height="200"
+              loading="lazy"
+            />
+            <div class="qr-overlay">
+              <span class="qr-hint">แตะเพื่อดูขนาดใหญ่</span>
+            </div>
+          </div>
+
+          <div class="qr-info">
+            <p><strong>ชื่อบัญชี:</strong> ธนภัทร & มณฑิดา</p>
+            <p>
+              <strong>เลขที่บัญชี:</strong>
+              <span id="account-number">XXX-XXX-XXXX</span>
+            </p>
+            <button
+              type="button"
+              class="btn-copy"
+              id="copy-account-btn"
+              aria-label="คัดลอกเลขที่บัญชี"
+            >
+              📋 คัดลอกเลขบัญชี
+            </button>
+          </div>
+        </div>
+
+        <!-- Thank You Message -->
+        <div class="thank-you-section">
+          <div class="thank-you-card">
+            <span class="thank-icon">🕊️</span>
+            <p class="thank-text">
+              ขออภัยหากมิได้เชิญด้วยตนเอง <br />
+              ขอบคุณจากใจที่ร่วมเป็นส่วนหนึ่ง <br />
+              ในวันพิเศษของเรา 💙
+            </p>
+            <div class="couple-names-small">
+              <span>ธนภัทร</span>
+              <span class="amp">&</span>
+              <span>มณฑิดา</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Success Message (Hidden by default) -->
+      <div
+        id="rsvp-success"
+        class="rsvp-success"
+        role="alert"
+        aria-live="polite"
+      >
+        <div class="success-icon">🎊</div>
+        <h3>ขอบคุณมากครับ/ค่ะ</h3>
+        <p>
+          เราได้รับข้อมูลของท่านแล้ว <br />ขอบคุณที่จะมาร่วมวันพิเศษของเรา 💙
+        </p>
+        <div class="success-flowers">🌸 🌼 🌷 🌼 🌸</div>
+        <button type="button" class="btn-back" id="rsvp-back">
+          กลับไปยังหน้าหลัก
+        </button>
+      </div>
+
+      <div class="rsvp-petals" aria-hidden="true"></div>
+    </section>
+
+    <!-- ===== MAIN CONTENT ANCHOR (Accessibility) ===== -->
+    <div id="main-content" tabindex="-1"></div>
+
+    <!-- ===== EXTERNAL LIBRARIES (โหลดก่อน) ===== -->
+    <!-- ลบ defer ออกเพื่อให้โหลดตามลำดับ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+
+    <!-- ===== CORE APP FILES (โหลดตามลำดับ) ===== -->
+    <!-- 1. Utils ก่อน -->
+    <script src="js/utils.js"></script>
+
+    <!-- 2. App Controller -->
+    <script src="js/app.js"></script>
+
+    <!-- 3. Scroll Manager (พึ่ง app.js) -->
+    <script src="js/scroll.js"></script>
+
+    <!-- 4. Music -->
+    <script src="js/music.js"></script>
+
+    <!-- ===== SCENE MODULES (โหลดหลัง app พร้อม) ===== -->
+    <!-- ซีน 1: Envelope -->
+    <script src="js/envelope.js"></script>
+
+    <!-- ซีน 2: Couple Reveal -->
+    <script src="js/couple-reveal.js"></script>
+
+    <!-- ซีน 3-11: โหลดตามลำดับ -->
+    <script src="js/hero.js"></script>
+    <script src="js/countdown.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/schedule.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/location.js"></script>
+    <script src="js/rsvp.js"></script>
+    <script src="js/thanks.js"></script>
+  </body>
+</html>
