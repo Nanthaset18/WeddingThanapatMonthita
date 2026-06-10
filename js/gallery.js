@@ -1,5 +1,5 @@
 /**
- * Gallery Scene - Clean Background Version
+ * Gallery Scene - Full Size Version
  * Features: Touch swipe, progress bar, auto-play, dots, keyboard nav
  */
 (function() {
@@ -17,12 +17,13 @@
   let totalSlides = 0;
   let isDragging = false;
   let startX = 0;
+  let startY = 0;
   let currentTranslate = 0;
   let prevTranslate = 0;
   let animationID = null;
   let autoPlayTimer = null;
   let progressTimer = null;
-  const SLIDE_DURATION = 5000; // 5 วินาทีต่อรูป
+  const SLIDE_DURATION = 5000;
 
   /**
    * Initialize Gallery
@@ -58,7 +59,7 @@
   }
 
   /**
-   * Setup DOM Elements (Dots, Active State, Progress)
+   * Setup DOM Elements
    */
   function setupDOM() {
     if (dotsContainer && dotsContainer.children.length === 0) {
@@ -71,13 +72,12 @@
         dotsContainer.appendChild(dot);
       }
     }
-
     updateSlideState(0);
     updateProgress(0);
   }
 
   /**
-   * Update Slide State (Active, Caption, Dots)
+   * Update Slide State
    */
   function updateSlideState(index) {
     currentIndex = Math.max(0, Math.min(index, totalSlides - 1));
@@ -86,7 +86,6 @@
     slidesContainer.style.transform = `translateX(${offset}%)`;
     
     slides.forEach((slide, i) => slide.classList.toggle('active', i === currentIndex));
-    
     document.querySelectorAll('.gallery-dot').forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
     
     updateProgress(0);
@@ -103,7 +102,7 @@
   }
 
   /**
-   * Touch/Swipe Handling (Mobile Optimized)
+   * Touch/Swipe Handling (iOS Optimized)
    */
   function initTouch() {
     slidesContainer.addEventListener('touchstart', startDrag, { passive: true });
@@ -121,10 +120,15 @@
   function getPositionX(e) {
     return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
   }
+  
+  function getPositionY(e) {
+    return e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
+  }
 
   function startDrag(e) {
     isDragging = true;
     startX = getPositionX(e);
+    startY = getPositionY(e);
     prevTranslate = slidesContainer.getBoundingClientRect().width * (-currentIndex);
     currentTranslate = prevTranslate;
     cancelAutoPlay();
@@ -133,11 +137,21 @@
 
   function drag(e) {
     if (!isDragging) return;
-    e.preventDefault();
     
-    const currentX = getPositionX(e);
-    const diff = currentX - startX;
-    currentTranslate = prevTranslate + diff;
+    const diffX = getPositionX(e) - startX;
+    const diffY = getPositionY(e) - startY;
+    
+    // ✅ อนุญาตให้เลื่อนหน้าแนวตั้งได้ ถ้าลากขึ้น-ลงชัดเจน
+    if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 10) {
+      return;
+    }
+    
+    // บล็อกเฉพาะตอนลากแนวนอนเพื่อสไลด์รูป
+    if (Math.abs(diffX) > 10) {
+      e.preventDefault();
+    }
+    
+    currentTranslate = prevTranslate + diffX;
     
     const maxTranslate = 20;
     const minTranslate = -(totalSlides - 1) * slidesContainer.getBoundingClientRect().width - 20;

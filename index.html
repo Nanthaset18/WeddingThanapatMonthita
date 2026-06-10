@@ -155,7 +155,6 @@
             </div>
           </div>
           <div class="envelope-to">
-            <span class="envelope-to-text">ขอเรียนเชิญ…</span>
           </div>
           <div class="envelope-fold-left"></div>
           <div class="envelope-fold-right"></div>
@@ -235,7 +234,7 @@
           <div class="reveal-text">
             <p class="reveal-intro font-script">Together with their families</p>
             <h1 class="reveal-names">
-              <span class="name-line name-first">Thanapat</span>
+              <span class="name-line name-first">Tanapat</span>
               <span class="name-amp" aria-hidden="true">🤍</span>
               <span class="name-line name-last">Monthita</span>
             </h1>
@@ -331,116 +330,103 @@
     </section>
 
     <!-- ===== SCENE 5: GALLERY ===== -->
-    <section
-      id="gallery-scene"
-      class="scene"
-      data-scene="gallery"
-      aria-label="แกลเลอรี่ภาพบ่าวสาว"
-    >
-      <!-- Background Image Layer -->
-      <div class="gallery-bg-layer">
-        <img
-          src="assets/images/15.jpg"
-          alt="พื้นหลังแกลเลอรี่"
-          class="gallery-bg-img"
-          width="1920"
-          height="1080"
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-        />
+<section
+  id="gallery-scene"
+  class="scene"
+  data-scene="gallery"
+  aria-label="แกลเลอรี่ภาพบ่าวสาว"
+>
+  <!-- Background Image Layer -->
+  <div class="gallery-bg-layer">
+    <img
+      src="assets/images/15.jpg"
+      alt="พื้นหลังแกลเลอรี่"
+      class="gallery-bg-img"
+      width="1920"
+      height="1080"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+    />
+  </div>
+
+  <div class="section-header">
+    <span class="eyebrow">✿ ภาพความทรงจำ ✿</span>
+    <h2>โมเมนต์พิเศษของเรา</h2>
+    <div class="divider"><span></span>🌸<span></span></div>
+  </div>
+
+  <!-- Cinematic Gallery Slider - Full Size -->
+  <div class="gallery-container">
+    <div class="gallery-viewport">
+      <div class="gallery-slides" id="gallery-slides">
+        <figure class="gallery-slide">
+          <img
+            src="assets/images/4.jpg"
+            alt="ภาพความทรงจำ ชุดที่ 1"
+            width="1200"
+            height="1600"
+            loading="lazy"
+          />
+        </figure>
+
+        <figure class="gallery-slide">
+          <img
+            src="assets/images/5.jpg"
+            alt="ภาพความทรงจำ ชุดที่ 2"
+            width="1200"
+            height="1600"
+            loading="lazy"
+          />
+        </figure>
+
+        <figure class="gallery-slide">
+          <img
+            src="assets/images/6.jpg"
+            alt="ภาพความทรงจำ ชุดที่ 3"
+            width="1200"
+            height="1600"
+            loading="lazy"
+          />
+        </figure>
+
+        <figure class="gallery-slide">
+          <img
+            src="assets/images/7.jpg"
+            alt="ภาพความทรงจำ ชุดที่ 4"
+            width="1200"
+            height="1600"
+            loading="lazy"
+          />
+        </figure>
+
+        <figure class="gallery-slide">
+          <img
+            src="assets/images/8.jpg"
+            alt="ภาพความทรงจำ ชุดที่ 5"
+            width="1200"
+            height="1600"
+            loading="lazy"
+          />
+        </figure>
       </div>
+    </div>
 
-      <div class="section-header">
-        <span class="eyebrow">✿ ภาพความทรงจำ ✿</span>
-        <h2>โมเมนต์พิเศษของเรา</h2>
-        <div class="divider"><span></span>🌸<span></span></div>
-      </div>
+    <!-- Gallery Controls -->
+    <div class="gallery-controls">
+      <button class="gallery-btn gallery-prev" aria-label="ภาพก่อนหน้า">❮</button>
+      <div class="gallery-dots" id="gallery-dots"></div>
+      <button class="gallery-btn gallery-next" aria-label="ภาพถัดไป">❯</button>
+    </div>
 
-      <!-- Cinematic Gallery Slider -->
-      <div class="gallery-container">
-        <div class="gallery-viewport">
-          <div class="gallery-slides" id="gallery-slides">
-            <figure class="gallery-slide">
-              <img
-                src="assets/images/4.jpg"
-                alt="ภาพความทรงจำ ชุดที่ 1"
-                width="1200"
-                height="800"
-                loading="lazy"
-              />
-              <figcaption class="gallery-caption">วันที่เราพบกัน</figcaption>
-            </figure>
+    <!-- Gallery Progress -->
+    <div class="gallery-progress">
+      <div class="progress-bar" id="gallery-progress"></div>
+    </div>
+  </div>
 
-            <figure class="gallery-slide">
-              <img
-                src="assets/images/5.jpg"
-                alt="ภาพความทรงจำ ชุดที่ 2"
-                width="1200"
-                height="800"
-                loading="lazy"
-              />
-              <figcaption class="gallery-caption">
-                ช่วงเวลาที่แสนหวาน
-              </figcaption>
-            </figure>
-
-            <figure class="gallery-slide">
-              <img
-                src="assets/images/6.jpg"
-                alt="ภาพความทรงจำ ชุดที่ 3"
-                width="1200"
-                height="800"
-                loading="lazy"
-              />
-              <figcaption class="gallery-caption">การเดินทางด้วยกัน</figcaption>
-            </figure>
-
-            <figure class="gallery-slide">
-              <img
-                src="assets/images/7.jpg"
-                alt="ภาพความทรงจำ ชุดที่ 4"
-                width="1200"
-                height="800"
-                loading="lazy"
-              />
-              <figcaption class="gallery-caption">
-                รอยยิ้มที่แสนอบอุ่น
-              </figcaption>
-            </figure>
-
-            <figure class="gallery-slide">
-              <img
-                src="assets/images/8.jpg"
-                alt="ภาพความทรงจำ ชุดที่ 5"
-                width="1200"
-                height="800"
-                loading="lazy"
-              />
-              <figcaption class="gallery-caption">ความรักที่เติบโต</figcaption>
-            </figure>
-          </div>
-        </div>
-
-        <!-- Gallery Controls -->
-        <div class="gallery-controls">
-          <button class="gallery-btn gallery-prev" aria-label="ภาพก่อนหน้า">
-            ❮
-          </button>
-          <div class="gallery-dots" id="gallery-dots"></div>
-          <button class="gallery-btn gallery-next" aria-label="ภาพถัดไป">
-            ❯
-          </button>
-        </div>
-
-        <!-- Gallery Progress -->
-        <div class="gallery-progress">
-          <div class="progress-bar" id="gallery-progress"></div>
-        </div>
-      </div>
-
-      <div class="gallery-petals" aria-hidden="true"></div>
-    </section>
+  <div class="gallery-petals" aria-hidden="true"></div>
+</section>
 
     <!-- ===== SCENE 6: WEDDING SCHEDULE ===== -->
     <section
@@ -503,7 +489,7 @@
           </div>
           <div class="timeline-content">
             <time class="timeline-time font-numbers" datetime="2026-07-26T09:00"
-              >09.00 น.</time
+              >09.09 น.</time
             >
             <h3 class="timeline-title">แห่ขันหมาก & พิธีหมั้น</h3>
           </div>
@@ -723,17 +709,7 @@
             </button>
           </div>
 
-          <!-- Info Notes -->
-          <div class="info-notes">
-            <div class="note-item">
-              <span class="note-icon">🅿️</span>
-              <span class="note-text">มีที่จอดรถให้บริการ</span>
-            </div>
-            <div class="note-item">
-              <span class="note-icon">🚕</span>
-              <span class="note-text">เรียกแท็กซี่/รถโดยสารสะดวก</span>
-            </div>
-          </div>
+         
         </div>
       </div>
 
@@ -778,7 +754,7 @@
           </p>
 
           <a
-            href="https://forms.google.com/your-form-link"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfu-KCgPGnUJmSoc0JOLP75xVaWrC1VdQX1swFD9n-xiGyepg/viewform?pli=1"
             target="_blank"
             rel="noopener noreferrer"
             class="btn-rsvp"
@@ -810,7 +786,7 @@
             aria-label="แตะเพื่อขยาย QR Code"
           >
             <img
-              src="assets/images/qr-payment.png"
+              src="assets/images/31.jpg"
               alt="QR Code สำหรับร่วมอวยพร"
               id="qr-code"
               width="200"
@@ -823,19 +799,9 @@
           </div>
 
           <div class="qr-info">
-            <p><strong>ชื่อบัญชี:</strong> ธนภัทร & มณฑิดา</p>
-            <p>
-              <strong>เลขที่บัญชี:</strong>
-              <span id="account-number">XXX-XXX-XXXX</span>
-            </p>
-            <button
-              type="button"
-              class="btn-copy"
-              id="copy-account-btn"
-              aria-label="คัดลอกเลขที่บัญชี"
-            >
-              📋 คัดลอกเลขบัญชี
-            </button>
+            <p><strong>ชื่อบัญชี:</strong>มณฑิตา พันธุ์ศักดิ์</p>
+           
+            
           </div>
         </div>
 
@@ -851,7 +817,7 @@
             <div class="couple-names-small">
               <span>ธนภัทร</span>
               <span class="amp">&</span>
-              <span>มณฑิดา</span>
+              <span>มณฑิตา</span>
             </div>
           </div>
         </div>
