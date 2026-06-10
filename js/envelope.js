@@ -1,6 +1,6 @@
 /**
  * Envelope Scene - Image Background Version
- * Handles: Opening animation, sparkles, petals, scene transition
+ * Handles: Opening animation, sparkles, petals, scene transition, auto-play music
  */
 (function () {
   'use strict';
@@ -106,6 +106,21 @@
 
       // Show couple photo popup
       setTimeout(() => { showBigCouplePhoto(); }, 620);
+
+      // ✅ ✅ ✅ เล่นเพลงอัตโนมัติหลังเปิดซอง ✅ ✅ ✅
+      setTimeout(() => {
+        if (typeof MusicPlayer !== 'undefined' && typeof MusicPlayer.playAfterEnvelopeOpen === 'function') {
+          MusicPlayer.playAfterEnvelopeOpen()
+            .then(success => {
+              if (success) {
+                console.log('🎵 Music auto-played after envelope open');
+              }
+            })
+            .catch(err => {
+              console.warn('🎵 Auto-play error:', err);
+            });
+        }
+      }, 1000); // รอ 1 วินาทีให้รูปเด้งมาก่อน
 
       // Go to next scene
       setTimeout(() => { goToNextScene(); }, 3600);

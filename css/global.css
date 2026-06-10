@@ -538,3 +538,68 @@ body[data-current-scene="envelope"] .scene-nav-dots {
     height: 10px;
   }
 }
+
+/* ===== Music Button - Enhanced ===== */
+.music-btn[aria-pressed="true"] {
+  background: linear-gradient(135deg, var(--gold, #d4af37), #f4e5c2);
+  border-color: var(--gold, #d4af37);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+  animation: pulseMusic 2s infinite;
+}
+
+@keyframes pulseMusic {
+  0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+  50% { box-shadow: 0 0 35px rgba(212, 175, 55, 0.8); }
+}
+
+.music-icon {
+  font-size: 22px;
+  position: absolute;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.music-playing {
+  opacity: 1;
+  animation: spinMusic 8s linear infinite;
+}
+
+.music-paused {
+  opacity: 0;
+}
+
+.music-btn[aria-pressed="true"] .music-playing { opacity: 1; }
+.music-btn[aria-pressed="true"] .music-paused { opacity: 0; }
+.music-btn[aria-pressed="false"] .music-playing { opacity: 0; }
+.music-btn[aria-pressed="false"] .music-paused { opacity: 1; }
+
+@keyframes spinMusic {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ซ่อนปุ่มในซีนซองจดหมาย */
+body[data-current-scene="envelope"] .music-btn {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .music-btn {
+    width: 48px;
+    height: 48px;
+    bottom: 20px;
+    right: 20px;
+  }
+  .music-icon { font-size: 20px; }
+  .music-tooltip { display: none; }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .music-btn,
+  .music-playing,
+  .music-btn[aria-pressed="true"] {
+    animation: none !important;
+  }
+}
